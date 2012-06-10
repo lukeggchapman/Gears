@@ -40,7 +40,7 @@ Kinetic.Gear = function(config) {
         }
         
         // draw gear hole
-        //context.moveto(this.x + this.holeRadius, this.y + this.holeRadius);
+        context.moveTo(this.x + this.holeRadius, this.y);
         context.arc(this.x, this.y, this.holeRadius, 0, 2 * Math.PI, true);
         this.fillStroke();
     };
