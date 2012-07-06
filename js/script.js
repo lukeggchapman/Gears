@@ -12,37 +12,39 @@ Kinetic.Gear = function(config) {
     config.drawFunc = function() {
         var canvas = this.getCanvas();
         var context = this.getContext();
-        var numPoints = this.numTeeth * 2;
+        var numPoints = this.attrs.numTeeth * 2;
         
         // draw gear teeth
         context.beginPath();
-        context.lineJoin = "bevel";
+        //context.lineJoin = "bevel";
         var R = (2 * Math.PI)/numPoints;
         var currentRadians = 0;
         for (var n = 0; n < numPoints; n++) {
             var radius = null;
 
             if (n % 2 == 0) {
-                radius = this.outerRadius;
+                radius = this.attrs.outerRadius;
             }
             else {
-                radius = this.innerRadius;
+                radius = this.attrs.innerRadius;
             }
             
-            var theta = this.theta;
+            var theta = this.attrs.theta;
             theta += ((Math.PI * 2) / numPoints) * (n + 1);
             
-            context.arc(this.x,this.y,radius,currentRadians + theta,currentRadians + theta + R,false);
+            context.arc(this.attrs.x,this.attrs.y,radius,currentRadians + theta,currentRadians + theta + R,false);
         }
         context.closePath();
-        if(this.patternImage){
-            this.setFill(context.createPattern(this.patternImage, "repeat"));
-        }
         
         // draw gear hole
-        context.moveTo(this.x + this.holeRadius, this.y);
-        context.arc(this.x, this.y, this.holeRadius, 0, 2 * Math.PI, true);
-        this.fillStroke();
+        context.moveTo(this.attrs.x + this.attrs.holeRadius, this.attrs.y);
+        context.arc(this.attrs.x, this.attrs.y, this.attrs.holeRadius, 0, 2 * Math.PI, true);
+        
+        if(this.attrs.patternImage){
+            this.setFill(context.createPattern(this.attrs.patternImage, "repeat"));
+        }
+        this.fill();
+        this.stroke();
     };
     // call super constructor
     Kinetic.Shape.apply(this, [config]);
@@ -122,13 +124,13 @@ window.onload = function() {
     stage.add(layer);
 
     //animate gear
-    stage.onFrame(function(frame) {
-        gear.rotate(Math.PI / 100);
-        gear2.rotate(-(Math.PI / 100)*1.25);
-        layer.draw();
-    });
-
-    stage.start();
+    // stage.onFrame(function(frame) {
+        // gear.rotate(Math.PI / 100);
+        // gear2.rotate(-(Math.PI / 100)*1.25);
+        // layer.draw();
+    // });
+// 
+    // stage.start();
 };
 
 
